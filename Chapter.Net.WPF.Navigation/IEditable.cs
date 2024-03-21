@@ -6,8 +6,6 @@
 
 using System.Threading.Tasks;
 
-// ReSharper disable once CheckNamespace
-
 namespace Chapter.Net.WPF.Navigation;
 
 /// <summary>
