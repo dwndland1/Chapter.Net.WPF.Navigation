@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/dwndland/Chapter.Net.WPF.Navigation/master/Icon.png" alt="logo" width="64"/>
+
 # Chapter.Net.WPF.Navigation Library
 
 ## Overview

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2024-03-31
+### Added
+- Added more supported .net versions.
+### Supported .Net Versions
+- .Net Core 3.0
+- .Net Framework 4.5
+- .Net 5 (Windows)
+- .Net 6 (Windows)
+- .Net 7 (Windows)
+- .Net 8 (Windows)
+
 ## [1.1.0] - 2024-03-21
 ### Added
 - Added IActivator that provides an async activate method for a ViewModel which can get called when switch between ViewModels without disposing them before. For example custom tab controls.

@@ -4,25 +4,26 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------------------------------
 
-namespace Chapter.Net.WPF.Navigation;
-
-/// <summary>
-///     Defines the strategy for the <see cref="StackedNavigationPresenter" />.
-/// </summary>
-public enum StackingStrategy
+namespace Chapter.Net.WPF.Navigation
 {
     /// <summary>
-    ///     The contents shall be overlapped.
+    ///     Defines the strategy for the <see cref="StackedNavigationPresenter" />.
     /// </summary>
-    Overlapping,
+    public enum StackingStrategy
+    {
+        /// <summary>
+        ///     The contents shall be overlapped.
+        /// </summary>
+        Overlapping,
 
-    /// <summary>
-    ///     The contents shall be arranged vertically.
-    /// </summary>
-    Vertical,
+        /// <summary>
+        ///     The contents shall be arranged vertically.
+        /// </summary>
+        Vertical,
 
-    /// <summary>
-    ///     The contents shall be arranged horizontally.
-    /// </summary>
-    Horizontal
+        /// <summary>
+        ///     The contents shall be arranged horizontally.
+        /// </summary>
+        Horizontal
+    }
 }

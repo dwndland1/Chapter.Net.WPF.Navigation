@@ -9,14 +9,15 @@ using System.Windows;
 using System.Windows.Interop;
 using IWin32Window = System.Windows.Forms.IWin32Window;
 
-namespace Chapter.Net.WPF.Navigation.Dialogs;
-
-internal class WindowWrapper : IWin32Window
+namespace Chapter.Net.WPF.Navigation.Dialogs
 {
-    public WindowWrapper(Window window)
+    internal class WindowWrapper : IWin32Window
     {
-        Handle = new WindowInteropHelper(window).Handle;
-    }
+        public WindowWrapper(Window window)
+        {
+            Handle = new WindowInteropHelper(window).Handle;
+        }
 
-    public IntPtr Handle { get; }
+        public IntPtr Handle { get; }
+    }
 }
