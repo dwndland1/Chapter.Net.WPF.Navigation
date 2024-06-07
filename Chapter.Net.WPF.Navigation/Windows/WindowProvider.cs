@@ -10,132 +10,131 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Chapter.Net.WPF.Navigation.Windows
+namespace Chapter.Net.WPF.Navigation.Windows;
+
+/// <inheritdoc />
+public sealed class WindowProvider : IWindowProvider
 {
-    /// <inheritdoc />
-    public sealed class WindowProvider : IWindowProvider
+    private static readonly DependencyProperty InstanceProperty =
+        DependencyProperty.RegisterAttached("Instance", typeof(Guid), typeof(WindowProvider), new PropertyMetadata(default(Guid)));
+
+    private readonly Dictionary<object, Type> _controls;
+    private readonly Dictionary<Guid, Tuple<object, Window>> _openWindows;
+    private readonly Dictionary<object, Type> _windows;
+    private object _mainWindowKey;
+
+    /// <summary>
+    ///     Creates a new instance of WindowProvider.
+    /// </summary>
+    public WindowProvider()
     {
-        private static readonly DependencyProperty InstanceProperty =
-            DependencyProperty.RegisterAttached("Instance", typeof(Guid), typeof(WindowProvider), new PropertyMetadata(default(Guid)));
+        _windows = new Dictionary<object, Type>();
+        _controls = new Dictionary<object, Type>();
+        _openWindows = new Dictionary<Guid, Tuple<object, Window>>();
+    }
 
-        private readonly Dictionary<object, Type> _controls;
-        private readonly Dictionary<Guid, Tuple<object, Window>> _openWindows;
-        private readonly Dictionary<object, Type> _windows;
-        private object _mainWindowKey;
+    /// <inheritdoc />
+    public Window GetNewWindow(object windowKey)
+    {
+        if (windowKey == null)
+            throw new ArgumentNullException(nameof(windowKey));
 
-        /// <summary>
-        ///     Creates a new instance of WindowProvider.
-        /// </summary>
-        public WindowProvider()
-        {
-            _windows = new Dictionary<object, Type>();
-            _controls = new Dictionary<object, Type>();
-            _openWindows = new Dictionary<Guid, Tuple<object, Window>>();
-        }
+        if (!_windows.TryGetValue(windowKey, out var windowType))
+            throw new InvalidOperationException($"For the windowKey '{windowKey}' no window is registered");
 
-        /// <inheritdoc />
-        public Window GetNewWindow(object windowKey)
-        {
-            if (windowKey == null)
-                throw new ArgumentNullException(nameof(windowKey));
+        var window = (Window)Activator.CreateInstance(windowType);
+        var instance = Guid.NewGuid();
+        SetInstance(window, instance);
+        _openWindows[instance] = Tuple.Create(windowKey, window);
+        window!.Closed += HandleWindowClosed;
+        return window;
+    }
 
-            if (!_windows.TryGetValue(windowKey, out var windowType))
-                throw new InvalidOperationException($"For the windowKey '{windowKey}' no window is registered");
+    /// <inheritdoc />
+    public Window GetOpenWindow(object windowKey)
+    {
+        if (windowKey == null)
+            throw new ArgumentNullException(nameof(windowKey));
 
-            var window = (Window)Activator.CreateInstance(windowType);
-            var instance = Guid.NewGuid();
-            SetInstance(window, instance);
-            _openWindows[instance] = Tuple.Create(windowKey, window);
-            window.Closed += HandleWindowClosed;
-            return window;
-        }
+        var window = TryGetOpenWindow(windowKey);
+        if (window == null)
+            throw new InvalidOperationException($"There is no open window with the window key '{windowKey}'");
 
-        /// <inheritdoc />
-        public Window GetOpenWindow(object windowKey)
-        {
-            if (windowKey == null)
-                throw new ArgumentNullException(nameof(windowKey));
+        return window;
+    }
 
-            var window = TryGetOpenWindow(windowKey);
-            if (window == null)
-                throw new InvalidOperationException($@"There is no open window with the window key '{windowKey}'");
+    /// <inheritdoc />
+    public Window TryGetOpenWindow(object windowKey)
+    {
+        var pair = _openWindows.FirstOrDefault(x => Equals(x.Value.Item1, windowKey));
+        return pair.Value?.Item2;
+    }
 
-            return window;
-        }
+    /// <inheritdoc />
+    public Window GetMainWindow()
+    {
+        return _mainWindowKey == null ? null : TryGetOpenWindow(_mainWindowKey);
+    }
 
-        /// <inheritdoc />
-        public Window TryGetOpenWindow(object windowKey)
-        {
-            var pair = _openWindows.FirstOrDefault(x => Equals(x.Value.Item1, windowKey));
-            return pair.Value?.Item2;
-        }
+    /// <inheritdoc />
+    public UserControl GetNewControl(object controlKey)
+    {
+        if (controlKey == null)
+            throw new ArgumentNullException(nameof(controlKey));
 
-        /// <inheritdoc />
-        public Window GetMainWindow()
-        {
-            return _mainWindowKey == null ? null : TryGetOpenWindow(_mainWindowKey);
-        }
+        if (!_controls.TryGetValue(controlKey, out var controlType))
+            throw new InvalidOperationException($"For the control key '{controlKey}' no user control is registered");
 
-        /// <inheritdoc />
-        public UserControl GetNewControl(object controlKey)
-        {
-            if (controlKey == null)
-                throw new ArgumentNullException(nameof(controlKey));
+        return (UserControl)Activator.CreateInstance(controlType);
+    }
 
-            if (!_controls.TryGetValue(controlKey, out var controlType))
-                throw new InvalidOperationException($"For the control key '{controlKey}' no user control is registered");
+    private void HandleWindowClosed(object sender, EventArgs e)
+    {
+        var window = (Window)sender;
+        window.Closed -= HandleWindowClosed;
+        var instance = GetInstance(window);
+        _openWindows.Remove(instance);
+    }
 
-            return (UserControl)Activator.CreateInstance(controlType);
-        }
+    /// <summary>
+    ///     Registers a window type for a window key.
+    /// </summary>
+    /// <typeparam name="TWindow">The type of the window to register.</typeparam>
+    /// <param name="windowKey">The window key.</param>
+    /// <param name="isMainWindow">Registers the window key additionally as the main window.</param>
+    /// <exception cref="ArgumentNullException">windowKey is null.</exception>
+    public void RegisterWindow<TWindow>(object windowKey, bool isMainWindow = false) where TWindow : Window
+    {
+        if (windowKey == null)
+            throw new ArgumentNullException(nameof(windowKey));
 
-        private void HandleWindowClosed(object sender, EventArgs e)
-        {
-            var window = (Window)sender;
-            window.Closed -= HandleWindowClosed;
-            var instance = GetInstance(window);
-            _openWindows.Remove(instance);
-        }
+        if (isMainWindow)
+            _mainWindowKey = windowKey;
 
-        /// <summary>
-        ///     Registers a window type for a window key.
-        /// </summary>
-        /// <typeparam name="TWindow">The type of the window to register.</typeparam>
-        /// <param name="windowKey">The window key.</param>
-        /// <param name="isMainWindow">Registers the window key additionally as the main window.</param>
-        /// <exception cref="ArgumentNullException">windowKey is null.</exception>
-        public void RegisterWindow<TWindow>(object windowKey, bool isMainWindow = false) where TWindow : Window
-        {
-            if (windowKey == null)
-                throw new ArgumentNullException(nameof(windowKey));
+        _windows[windowKey] = typeof(TWindow);
+    }
 
-            if (isMainWindow)
-                _mainWindowKey = windowKey;
+    /// <summary>
+    ///     Registers a user control type by a key.
+    /// </summary>
+    /// <typeparam name="TControl">The type of the user control to register.</typeparam>
+    /// <param name="controlKey">The user control key.</param>
+    /// <exception cref="ArgumentNullException">controlKey is null.</exception>
+    public void RegisterControl<TControl>(object controlKey) where TControl : UserControl
+    {
+        if (controlKey == null)
+            throw new ArgumentNullException(nameof(controlKey));
 
-            _windows[windowKey] = typeof(TWindow);
-        }
+        _controls[controlKey] = typeof(TControl);
+    }
 
-        /// <summary>
-        ///     Registers a user control type by a key.
-        /// </summary>
-        /// <typeparam name="TControl">The type of the user control to register.</typeparam>
-        /// <param name="controlKey">The user control key.</param>
-        /// <exception cref="ArgumentNullException">controlKey is null.</exception>
-        public void RegisterControl<TControl>(object controlKey) where TControl : UserControl
-        {
-            if (controlKey == null)
-                throw new ArgumentNullException(nameof(controlKey));
+    private static Guid GetInstance(DependencyObject obj)
+    {
+        return (Guid)obj.GetValue(InstanceProperty);
+    }
 
-            _controls[controlKey] = typeof(TControl);
-        }
-
-        private static Guid GetInstance(DependencyObject obj)
-        {
-            return (Guid)obj.GetValue(InstanceProperty);
-        }
-
-        private static void SetInstance(DependencyObject obj, Guid value)
-        {
-            obj.SetValue(InstanceProperty, value);
-        }
+    private static void SetInstance(DependencyObject obj, Guid value)
+    {
+        obj.SetValue(InstanceProperty, value);
     }
 }

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2024-06-07
+### Changed
+- Update to support .Net 8 only.
+### Fixed
+- Fixed initial assign of the selected path for the folder browser
+
 ## [1.2.0] - 2024-03-31
 ### Added
 - Added more supported .net versions.
