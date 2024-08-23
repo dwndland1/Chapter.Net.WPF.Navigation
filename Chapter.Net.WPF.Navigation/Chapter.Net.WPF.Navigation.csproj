@@ -8,7 +8,7 @@
     <Authors>David Wendland</Authors>
     <Description>Chapter.Net.WPF.Navigation follows the idea of "*It shall be async*". It brings the possibility to show windows, user controls and dialogs in an MVVM environment.</Description>
     <Copyright>Copyright (c) 2024 David Wendland</Copyright>
-    <PackageProjectUrl>https://github.com/dwndlnd/Chapter.Net.WPF.Navigation</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/dwndland/Chapter.Net.WPF.Navigation</PackageProjectUrl>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
