@@ -399,4 +399,28 @@ public interface INavigationService
     /// <exception cref="ArgumentNullException">fontPickerData is null.</exception>
     /// <exception cref="InvalidOperationException">There is no open window with the given owner key.</exception>
     Task<bool> ShowDialog(object ownerWindowKey, IFontPickerData fontPickerData);
+
+    /// <summary>
+    ///     Checks if a window is registered by the given window key.
+    /// </summary>
+    /// <param name="windowKey">The key of the window to look for.</param>
+    /// <returns>True if the window is known by its key; otherwise false.</returns>
+    /// <exception cref="ArgumentNullException">windowKey is null.</exception>
+    bool IsWindowKnown(object windowKey);
+
+    /// <summary>
+    ///     Checks if a user control is registered by the given control key.
+    /// </summary>
+    /// <param name="controlKey">The key of the user control to look for.</param>
+    /// <returns>True if the user control is known by its key; otherwise false.</returns>
+    /// <exception cref="ArgumentNullException">controlKey is null.</exception>
+    bool IsControlKnown(object controlKey);
+
+    /// <summary>
+    ///     Checks if a navigation presenter is registered by the given host ID.
+    /// </summary>
+    /// <param name="hostId">The ID of the navigation presenter to look for.</param>
+    /// <returns>True if the navigation presenter is known by its key; otherwise false.</returns>
+    /// <exception cref="ArgumentNullException">hostId is null.</exception>
+    bool IsHostKnown(object hostId);
 }

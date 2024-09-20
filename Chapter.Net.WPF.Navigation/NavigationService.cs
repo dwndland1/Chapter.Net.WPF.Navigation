@@ -438,6 +438,24 @@ public class NavigationService : INavigationService
         return _dialogProvider.Show(window, fontPickerData);
     }
 
+    /// <inheritdoc />
+    public bool IsWindowKnown(object windowKey)
+    {
+        return _windowProvider.IsWindowRegistered(windowKey);
+    }
+
+    /// <inheritdoc />
+    public bool IsControlKnown(object controlKey)
+    {
+        return _windowProvider.IsControlRegistered(controlKey);
+    }
+
+    /// <inheritdoc />
+    public bool IsHostKnown(object hostId)
+    {
+        return _navigationPresenterProvider.TryNavigationPresenter(hostId, out _);
+    }
+
     private async Task ShowWindowImpl(object ownerWindowKey, object windowKey, object viewModel)
     {
         var window = CreateWindow(ownerWindowKey, windowKey, viewModel);

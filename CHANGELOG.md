@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [2.1.0] - 2024-09-20
+### Added
+- Add checks if windows, user controls or navigation presenters are registered by their keys and IDs.
 ### Changed
 - Moved navigation presenters into an own namespace.
 - Created a new INavigationPresenterProvider and use it in the NavigationService.

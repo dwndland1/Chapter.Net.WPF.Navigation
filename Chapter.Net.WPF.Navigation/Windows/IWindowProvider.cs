@@ -54,4 +54,20 @@ public interface IWindowProvider
     /// <exception cref="ArgumentNullException">controlKey is null.</exception>
     /// <exception cref="InvalidOperationException">For the control key no user control is registered</exception>
     UserControl GetNewControl(object controlKey);
+
+    /// <summary>
+    /// Checks if a window is registered by the given window key.
+    /// </summary>
+    /// <param name="windowKey">The key of the window to check for.</param>
+    /// <returns>True of the window is registered by the given key; otherwise false.</returns>
+    /// <exception cref="ArgumentNullException">windowKey is null.</exception>
+    bool IsWindowRegistered(object windowKey);
+
+    /// <summary>
+    /// Checks if a user control is registered by the given control key.
+    /// </summary>
+    /// <param name="controlKey">The key of the user control to check for.</param>
+    /// <returns>True of the user control is registered by the given key; otherwise false.</returns>
+    /// <exception cref="ArgumentNullException">controlKey is null.</exception>
+    bool IsControlRegistered(object controlKey);
 }

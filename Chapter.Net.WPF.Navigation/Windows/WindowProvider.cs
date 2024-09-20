@@ -85,6 +85,20 @@ public sealed class WindowProvider : IWindowProvider
         return (UserControl)Activator.CreateInstance(controlType);
     }
 
+    /// <inheritdoc />
+    public bool IsWindowRegistered(object windowKey)
+    {
+        ArgumentNullException.ThrowIfNull(windowKey);
+        return _windows.TryGetValue(windowKey, out _);
+    }
+
+    /// <inheritdoc />
+    public bool IsControlRegistered(object controlKey)
+    {
+        ArgumentNullException.ThrowIfNull(controlKey);
+        return _controls.TryGetValue(controlKey, out _);
+    }
+
     private void HandleWindowClosed(object sender, EventArgs e)
     {
         var window = (Window)sender;
