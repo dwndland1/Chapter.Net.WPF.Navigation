@@ -16,8 +16,7 @@ public sealed class MessageBoxProvider : IMessageBoxProvider
     /// <inheritdoc />
     public Task<MessageBoxResult> Show(string messageBoxText)
     {
-        if (messageBoxText == null)
-            throw new ArgumentNullException(nameof(messageBoxText));
+        ArgumentNullException.ThrowIfNull(messageBoxText);
 
         var result = MessageBox.Show(messageBoxText);
         return Task.FromResult(result);
@@ -26,10 +25,8 @@ public sealed class MessageBoxProvider : IMessageBoxProvider
     /// <inheritdoc />
     public Task<MessageBoxResult> Show(Window owner, string messageBoxText)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-        if (messageBoxText == null)
-            throw new ArgumentNullException(nameof(messageBoxText));
+        ArgumentNullException.ThrowIfNull(owner);
+        ArgumentNullException.ThrowIfNull(messageBoxText);
 
         var result = MessageBox.Show(owner, messageBoxText);
         return Task.FromResult(result);
@@ -38,10 +35,8 @@ public sealed class MessageBoxProvider : IMessageBoxProvider
     /// <inheritdoc />
     public Task<MessageBoxResult> Show(string messageBoxText, string caption)
     {
-        if (messageBoxText == null)
-            throw new ArgumentNullException(nameof(messageBoxText));
-        if (caption == null)
-            throw new ArgumentNullException(nameof(caption));
+        ArgumentNullException.ThrowIfNull(messageBoxText);
+        ArgumentNullException.ThrowIfNull(caption);
 
         var result = MessageBox.Show(messageBoxText, caption);
         return Task.FromResult(result);
@@ -50,12 +45,9 @@ public sealed class MessageBoxProvider : IMessageBoxProvider
     /// <inheritdoc />
     public Task<MessageBoxResult> Show(Window owner, string messageBoxText, string caption)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-        if (messageBoxText == null)
-            throw new ArgumentNullException(nameof(messageBoxText));
-        if (caption == null)
-            throw new ArgumentNullException(nameof(caption));
+        ArgumentNullException.ThrowIfNull(owner);
+        ArgumentNullException.ThrowIfNull(messageBoxText);
+        ArgumentNullException.ThrowIfNull(caption);
 
         var result = MessageBox.Show(owner, messageBoxText, caption);
         return Task.FromResult(result);
@@ -64,10 +56,8 @@ public sealed class MessageBoxProvider : IMessageBoxProvider
     /// <inheritdoc />
     public Task<MessageBoxResult> Show(string messageBoxText, string caption, MessageBoxButton button)
     {
-        if (messageBoxText == null)
-            throw new ArgumentNullException(nameof(messageBoxText));
-        if (caption == null)
-            throw new ArgumentNullException(nameof(caption));
+        ArgumentNullException.ThrowIfNull(messageBoxText);
+        ArgumentNullException.ThrowIfNull(caption);
 
         var result = MessageBox.Show(messageBoxText, caption, button);
         return Task.FromResult(result);
@@ -76,12 +66,9 @@ public sealed class MessageBoxProvider : IMessageBoxProvider
     /// <inheritdoc />
     public Task<MessageBoxResult> Show(Window owner, string messageBoxText, string caption, MessageBoxButton button)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-        if (messageBoxText == null)
-            throw new ArgumentNullException(nameof(messageBoxText));
-        if (caption == null)
-            throw new ArgumentNullException(nameof(caption));
+        ArgumentNullException.ThrowIfNull(owner);
+        ArgumentNullException.ThrowIfNull(messageBoxText);
+        ArgumentNullException.ThrowIfNull(caption);
 
         var result = MessageBox.Show(owner, messageBoxText, caption, button);
         return Task.FromResult(result);
@@ -90,12 +77,9 @@ public sealed class MessageBoxProvider : IMessageBoxProvider
     /// <inheritdoc />
     public Task<MessageBoxResult> Show(string messageBoxText, string caption, MessageBoxButton button, IMessageBoxOptions options)
     {
-        if (messageBoxText == null)
-            throw new ArgumentNullException(nameof(messageBoxText));
-        if (caption == null)
-            throw new ArgumentNullException(nameof(caption));
-        if (options == null)
-            throw new ArgumentNullException(nameof(options));
+        ArgumentNullException.ThrowIfNull(messageBoxText);
+        ArgumentNullException.ThrowIfNull(caption);
+        ArgumentNullException.ThrowIfNull(options);
 
         if (options.Icon != null && options.DefaultResult != null)
             return Task.FromResult(MessageBox.Show(messageBoxText, caption, button, options.Icon.Value, options.DefaultResult.Value));
@@ -109,14 +93,10 @@ public sealed class MessageBoxProvider : IMessageBoxProvider
     /// <inheritdoc />
     public Task<MessageBoxResult> Show(Window owner, string messageBoxText, string caption, MessageBoxButton button, IMessageBoxOptions options)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-        if (messageBoxText == null)
-            throw new ArgumentNullException(nameof(messageBoxText));
-        if (caption == null)
-            throw new ArgumentNullException(nameof(caption));
-        if (options == null)
-            throw new ArgumentNullException(nameof(options));
+        ArgumentNullException.ThrowIfNull(owner);
+        ArgumentNullException.ThrowIfNull(messageBoxText);
+        ArgumentNullException.ThrowIfNull(caption);
+        ArgumentNullException.ThrowIfNull(options);
 
         if (options.Icon != null && options.DefaultResult != null)
             return Task.FromResult(MessageBox.Show(owner, messageBoxText, caption, button, options.Icon.Value, options.DefaultResult.Value));

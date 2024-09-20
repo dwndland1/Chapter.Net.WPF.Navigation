@@ -36,8 +36,7 @@ public sealed class WindowProvider : IWindowProvider
     /// <inheritdoc />
     public Window GetNewWindow(object windowKey)
     {
-        if (windowKey == null)
-            throw new ArgumentNullException(nameof(windowKey));
+        ArgumentNullException.ThrowIfNull(windowKey);
 
         if (!_windows.TryGetValue(windowKey, out var windowType))
             throw new InvalidOperationException($"For the windowKey '{windowKey}' no window is registered");
@@ -53,8 +52,7 @@ public sealed class WindowProvider : IWindowProvider
     /// <inheritdoc />
     public Window GetOpenWindow(object windowKey)
     {
-        if (windowKey == null)
-            throw new ArgumentNullException(nameof(windowKey));
+        ArgumentNullException.ThrowIfNull(windowKey);
 
         var window = TryGetOpenWindow(windowKey);
         if (window == null)
@@ -79,8 +77,7 @@ public sealed class WindowProvider : IWindowProvider
     /// <inheritdoc />
     public UserControl GetNewControl(object controlKey)
     {
-        if (controlKey == null)
-            throw new ArgumentNullException(nameof(controlKey));
+        ArgumentNullException.ThrowIfNull(controlKey);
 
         if (!_controls.TryGetValue(controlKey, out var controlType))
             throw new InvalidOperationException($"For the control key '{controlKey}' no user control is registered");
@@ -105,8 +102,7 @@ public sealed class WindowProvider : IWindowProvider
     /// <exception cref="ArgumentNullException">windowKey is null.</exception>
     public void RegisterWindow<TWindow>(object windowKey, bool isMainWindow = false) where TWindow : Window
     {
-        if (windowKey == null)
-            throw new ArgumentNullException(nameof(windowKey));
+        ArgumentNullException.ThrowIfNull(windowKey);
 
         if (isMainWindow)
             _mainWindowKey = windowKey;
@@ -122,8 +118,7 @@ public sealed class WindowProvider : IWindowProvider
     /// <exception cref="ArgumentNullException">controlKey is null.</exception>
     public void RegisterControl<TControl>(object controlKey) where TControl : UserControl
     {
-        if (controlKey == null)
-            throw new ArgumentNullException(nameof(controlKey));
+        ArgumentNullException.ThrowIfNull(controlKey);
 
         _controls[controlKey] = typeof(TControl);
     }

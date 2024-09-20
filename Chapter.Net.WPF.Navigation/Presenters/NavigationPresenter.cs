@@ -17,7 +17,7 @@ namespace Chapter.Net.WPF.Navigation.Presenters;
 /// <summary>
 ///     Base class for the host where the <see cref="NavigationService" /> shows its user control.
 /// </summary>
-public abstract class NavigationPresenter : Control
+public abstract class NavigationPresenter : Control, INavigationPresenter
 {
     /// <summary>
     ///     The DependencyProperty for the ID property.
@@ -72,11 +72,7 @@ public abstract class NavigationPresenter : Control
         set => SetValue(DisposeViewModelProperty, value);
     }
 
-    /// <summary>
-    ///     Gets the potential cached user control by its viewmodel.
-    /// </summary>
-    /// <param name="viewModel">The viewmodel of the user control.</param>
-    /// <returns>The user control if any; otherwise null.</returns>
+    /// <inheritdoc />
     public virtual FrameworkElement GetCached(object viewModel)
     {
         var dead = _cache.Where(x => !x.Key.IsAlive);
@@ -86,11 +82,7 @@ public abstract class NavigationPresenter : Control
         return _cache.FirstOrDefault(x => Equals(x.Key.Target, viewModel)).Value;
     }
 
-    /// <summary>
-    ///     Stores a user control for a later use if <see cref="EnableUIPersistence" /> is on.
-    /// </summary>
-    /// <param name="viewModel">The viewmodel of the user control.</param>
-    /// <param name="control">The user control to store.</param>
+    /// <inheritdoc />
     public virtual void StoreCached(object viewModel, FrameworkElement control)
     {
         if (!EnableUIPersistence)
@@ -103,30 +95,21 @@ public abstract class NavigationPresenter : Control
         _cache[new WeakReference(viewModel)] = control;
     }
 
-    /// <summary>
-    ///     Checks if the current displayed user control can be replaced by a different.
-    /// </summary>
-    /// <returns>The task to await.</returns>
+    /// <inheritdoc />
     public abstract Task<bool> CanSetContent();
 
-    /// <summary>
-    ///     Replaces the current displayed user control by a different one.
-    /// </summary>
-    /// <param name="control">The control to set.</param>
+    /// <inheritdoc />
     public abstract void SetContent(FrameworkElement control);
 
-    /// <summary>
-    ///     Removes the content by its viewmodel.
-    /// </summary>
-    /// <param name="viewModel">The viewmodel of the content to remove.</param>
+    /// <inheritdoc />
     public abstract bool ClearContent(object viewModel);
 
     private static void OnIDChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var control = (NavigationPresenter)d;
         if (e.OldValue != null)
-            NavigationService.UnregisterPresenter(e.OldValue);
+            NavigationPresenterProvider.UnregisterPresenter(e.OldValue);
         if (e.NewValue != null)
-            NavigationService.RegisterPresenter(e.NewValue, control);
+            NavigationPresenterProvider.RegisterPresenter(e.NewValue, control);
     }
 }

@@ -17,8 +17,7 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(IOpenFileData openFileData)
     {
-        if (openFileData == null)
-            throw new ArgumentNullException(nameof(openFileData));
+        ArgumentNullException.ThrowIfNull(openFileData);
 
         return ShowImpl(null, openFileData);
     }
@@ -26,10 +25,8 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(Window owner, IOpenFileData openFileData)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-        if (openFileData == null)
-            throw new ArgumentNullException(nameof(openFileData));
+        ArgumentNullException.ThrowIfNull(owner);
+        ArgumentNullException.ThrowIfNull(openFileData);
 
         return ShowImpl(owner, openFileData);
     }
@@ -37,8 +34,7 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(ISaveFileData saveFileData)
     {
-        if (saveFileData == null)
-            throw new ArgumentNullException(nameof(saveFileData));
+        ArgumentNullException.ThrowIfNull(saveFileData);
 
         return ShowImpl(null, saveFileData);
     }
@@ -46,10 +42,8 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(Window owner, ISaveFileData saveFileData)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-        if (saveFileData == null)
-            throw new ArgumentNullException(nameof(saveFileData));
+        ArgumentNullException.ThrowIfNull(owner);
+        ArgumentNullException.ThrowIfNull(saveFileData);
 
         return ShowImpl(owner, saveFileData);
     }
@@ -57,8 +51,7 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(IBrowseFolderData browseFolderData)
     {
-        if (browseFolderData == null)
-            throw new ArgumentNullException(nameof(browseFolderData));
+        ArgumentNullException.ThrowIfNull(browseFolderData);
 
         return ShowImpl(null, browseFolderData);
     }
@@ -66,10 +59,8 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(Window owner, IBrowseFolderData browseFolderData)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-        if (browseFolderData == null)
-            throw new ArgumentNullException(nameof(browseFolderData));
+        ArgumentNullException.ThrowIfNull(owner);
+        ArgumentNullException.ThrowIfNull(browseFolderData);
 
         return ShowImpl(owner, browseFolderData);
     }
@@ -77,8 +68,7 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(IColorPickerData colorPickerData)
     {
-        if (colorPickerData == null)
-            throw new ArgumentNullException(nameof(colorPickerData));
+        ArgumentNullException.ThrowIfNull(colorPickerData);
 
         return ShowImpl(null, colorPickerData);
     }
@@ -86,10 +76,8 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(Window owner, IColorPickerData colorPickerData)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-        if (colorPickerData == null)
-            throw new ArgumentNullException(nameof(colorPickerData));
+        ArgumentNullException.ThrowIfNull(owner);
+        ArgumentNullException.ThrowIfNull(colorPickerData);
 
         return ShowImpl(owner, colorPickerData);
     }
@@ -97,8 +85,7 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(IFontPickerData fontPickerData)
     {
-        if (fontPickerData == null)
-            throw new ArgumentNullException(nameof(fontPickerData));
+        ArgumentNullException.ThrowIfNull(fontPickerData);
 
         return ShowImpl(null, fontPickerData);
     }
@@ -106,10 +93,8 @@ public sealed class DialogProvider : IDialogProvider
     /// <inheritdoc />
     public Task<bool> Show(Window owner, IFontPickerData fontPickerData)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner));
-        if (fontPickerData == null)
-            throw new ArgumentNullException(nameof(fontPickerData));
+        ArgumentNullException.ThrowIfNull(owner);
+        ArgumentNullException.ThrowIfNull(fontPickerData);
 
         return ShowImpl(owner, fontPickerData);
     }

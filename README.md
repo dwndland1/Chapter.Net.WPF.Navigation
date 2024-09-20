@@ -34,6 +34,7 @@ Chapter.Net.WPF.Navigation brings everything you need to open windows, close win
         {
             _unityContainer = new UnityContainer();
             _unityContainer.RegisterSingleton<IWindowProvider, WindowProvider>();
+            _unityContainer.RegisterSingleton<INavigationPresenterProvider, NavigationPresenterProvider>();
             _unityContainer.RegisterType<IDialogProvider, DialogProvider>();
             _unityContainer.RegisterType<IMessageBoxProvider, MessageBoxProvider>();
             _unityContainer.RegisterType<INavigationService, NavigationService>();
