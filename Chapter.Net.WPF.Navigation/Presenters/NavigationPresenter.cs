@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Chapter.Net.WPF.Navigation;
+namespace Chapter.Net.WPF.Navigation.Presenters;
 
 /// <summary>
 ///     Base class for the host where the <see cref="NavigationService" /> shows its user control.

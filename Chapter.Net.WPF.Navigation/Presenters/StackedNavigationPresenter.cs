@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Chapter.Net.WPF.Navigation;
+namespace Chapter.Net.WPF.Navigation.Presenters;
 
 /// <summary>
 ///     Represents a host where multiple user controls can be displayed.

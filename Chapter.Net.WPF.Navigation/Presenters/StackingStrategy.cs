@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------------------------------
 
-namespace Chapter.Net.WPF.Navigation;
+namespace Chapter.Net.WPF.Navigation.Presenters;
 
 /// <summary>
 ///     Defines the strategy for the <see cref="StackedNavigationPresenter" />.

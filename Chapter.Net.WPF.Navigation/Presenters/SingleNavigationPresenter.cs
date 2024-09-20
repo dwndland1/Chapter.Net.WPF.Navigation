@@ -8,7 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Chapter.Net.WPF.Navigation;
+namespace Chapter.Net.WPF.Navigation.Presenters;
 
 /// <summary>
 ///     Represents a host where a single user control will be placed by the <see cref="NavigationService" />.
