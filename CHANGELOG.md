@@ -7,18 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2024-12-01
+### Added
+- Added .net 9 to the supported .net versions.
+### Supported .Net Versions
+- .Net 8 (Windows)
+- .Net 9 (Windows)
+
 ## [2.1.0] - 2024-09-20
 ### Added
 - Add checks if windows, user controls or navigation presenters are registered by their keys and IDs.
 ### Changed
 - Moved navigation presenters into an own namespace.
 - Created a new INavigationPresenterProvider and use it in the NavigationService.
+### Supported .Net Versions
+- .Net 8 (Windows)
 
 ## [2.0.0] - 2024-06-07
 ### Changed
 - Update to support .Net 8 only.
 ### Fixed
 - Fixed initial assign of the selected path for the folder browser.
+### Supported .Net Versions
+- .Net 8 (Windows)
 
 ## [1.2.0] - 2024-03-31
 ### Added
